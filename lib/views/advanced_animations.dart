@@ -1,37 +1,55 @@
-import 'package:basic_anim/controllers/advanced_animation_controller.dart';
+import 'package:basic_anim/widgets/animated_logo.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class AdvancedAnimations extends GetView<AdvancedAnimationController> {
+class AdvancedAnimations extends StatefulWidget {
   const AdvancedAnimations({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final ctrl = Get.put(AdvancedAnimationController());
-    return Scaffold(
-      appBar: AppBar(title: Text("Advanced Animations")),
-      body: Container(
-        padding: EdgeInsets.only(top: 50, left: 10, right: 10),
-        child: Obx(
-          () => Container(
-            height: 50,
-            width: 200,
-            decoration: BoxDecoration(border: Border.all()),
-            child: TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.0, end: ctrl.progressVal.value),
-              duration: Duration(seconds: 2),
-              builder: (context, value, child) {
-                print('Value is $value');
-                return Container(
-                  height: 50,
-                  width: value,
-                  color: Colors.greenAccent,
-                );
-              },
-            ),
-          ),
-        ),
-      ),
+  State<AdvancedAnimations> createState() => _AdvancedAnimationsState();
+}
+
+class _AdvancedAnimationsState extends State<AdvancedAnimations>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
     );
+    // animation = Tween<double>(begin: 0, end: 300).animate(controller)
+    //   ..addListener(() {
+    //     setState(() {});
+    //   });
+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
+      ..addStatusListener((status) {
+        print('Status $status');
+      });
+    controller.forward();
+  }
+
+  @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(title: const Text("Advanced Animations")),
+  //     body: Center(
+  //       child: Container(
+  //         margin: const EdgeInsets.symmetric(vertical: 10),
+  //         height: animation.value,
+  //         width: animation.value,
+  //         child: const FlutterLogo(),
+  //       ),
+  //     ),
+  //   );
+  // }
+  Widget build(BuildContext context) =>
+      AnimatedLogo(animation: animation, listenable: animation);
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }
