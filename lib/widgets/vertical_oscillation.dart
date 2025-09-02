@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Pinpong extends StatefulWidget {
-  const Pinpong({super.key});
+class VerticalOscillation extends StatefulWidget {
+  const VerticalOscillation({super.key});
 
   @override
-  State<Pinpong> createState() => _PinpongState();
+  State<VerticalOscillation> createState() => _VerticalOscillationState();
 }
 
-class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
+class _VerticalOscillationState extends State<VerticalOscillation>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -19,8 +20,8 @@ class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
       duration: const Duration(seconds: 1),
     );
     _animation = Tween<double>(
-      begin: 50.0,
-      end: 100.0,
+      begin: -10.0,
+      end: 10.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.repeat(reverse: true);
   }
@@ -31,14 +32,16 @@ class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            height: _animation.value,
-            width: _animation.value,
+          return Transform.translate(
+            offset: Offset(0, _animation.value),
             child: child,
           );
         },
-        child: const FlutterLogo(style: FlutterLogoStyle.horizontal),
+        child: FlutterLogo(
+          size: 100,
+          style: FlutterLogoStyle.stacked,
+          textColor: Colors.red,
+        ),
       ),
     );
   }

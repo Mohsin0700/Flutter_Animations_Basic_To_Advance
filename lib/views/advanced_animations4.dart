@@ -1,4 +1,8 @@
+import 'package:basic_anim/widgets/pendullum.dart';
 import 'package:basic_anim/widgets/pinpong.dart';
+import 'package:basic_anim/widgets/vertical_oscillation.dart';
+import 'package:basic_anim/widgets/wheel_effect.dart';
+import 'package:basic_anim/widgets/wobble_effect.dart';
 import 'package:flutter/material.dart';
 
 class AdvancedAnimations4 extends StatefulWidget {
@@ -10,7 +14,13 @@ class AdvancedAnimations4 extends StatefulWidget {
 
 class _AdvancedAnimations4State extends State<AdvancedAnimations4>
     with TickerProviderStateMixin {
-  final List<Widget> myWidgets = [Pinpong()];
+  final List<Widget> myWidgets = [
+    Pinpong(),
+    VerticalOscillation(),
+    WheelEffect(),
+    WobbleEffect(),
+    Pendullum(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,7 @@ class _AdvancedAnimations4State extends State<AdvancedAnimations4>
           crossAxisCount: 2,
         ),
         itemBuilder: (context, index) {
-          return myWidgets[index];
+          return Card(child: myWidgets[index]);
         },
       ),
     );

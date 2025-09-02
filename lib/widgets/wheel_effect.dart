@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Pinpong extends StatefulWidget {
-  const Pinpong({super.key});
+class WheelEffect extends StatefulWidget {
+  const WheelEffect({super.key});
 
   @override
-  State<Pinpong> createState() => _PinpongState();
+  State<WheelEffect> createState() => _WheelEffectState();
 }
 
-class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
+class _WheelEffectState extends State<WheelEffect>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -16,13 +17,13 @@ class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
     );
     _animation = Tween<double>(
-      begin: 50.0,
-      end: 100.0,
+      begin: 0,
+      end: 2 * 3.14,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-    _controller.repeat(reverse: true);
+    _controller.repeat(reverse: false);
   }
 
   @override
@@ -31,14 +32,9 @@ class _PinpongState extends State<Pinpong> with SingleTickerProviderStateMixin {
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            height: _animation.value,
-            width: _animation.value,
-            child: child,
-          );
+          return Transform.rotate(angle: _animation.value, child: child);
         },
-        child: const FlutterLogo(style: FlutterLogoStyle.horizontal),
+        child: FlutterLogo(size: 100, style: FlutterLogoStyle.values[0]),
       ),
     );
   }
