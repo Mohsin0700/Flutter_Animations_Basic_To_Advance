@@ -2,7 +2,10 @@ import 'package:basic_anim/controllers/advanced_animation_controller.dart';
 import 'package:basic_anim/controllers/basic_animations_controller.dart';
 import 'package:basic_anim/views/advanced_animations.dart';
 import 'package:basic_anim/views/advanced_animations2.dart';
+import 'package:basic_anim/views/advanced_animations3.dart';
+import 'package:basic_anim/views/advanced_animations4.dart';
 import 'package:basic_anim/views/basic_animations.dart';
+import 'package:basic_anim/widgets/pinpong.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +42,21 @@ class Homepage extends StatelessWidget {
               icon: Text('Advanced Animations-2'),
               onPressed: () {
                 Get.to(() => AdvancedAnimations2());
+              },
+              label: Icon(Icons.arrow_right_alt),
+            ),
+            ElevatedButton.icon(
+              icon: Text('Advanced Animations-3'),
+              onPressed: () {
+                Get.to(() => AdvancedAnimations3());
+              },
+              label: Icon(Icons.arrow_right_alt),
+            ),
+            ElevatedButton.icon(
+              icon: Text('Advanced Animations-4'),
+              onPressed: () {
+                Get.to(() => AdvancedAnimations4());
+                // Get.to(() => Pinpong());
               },
               label: Icon(Icons.arrow_right_alt),
             ),

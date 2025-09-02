@@ -9,43 +9,47 @@ class AdvancedAnimations2 extends StatefulWidget {
 
 class _AdvancedAnimations2State extends State<AdvancedAnimations2>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<double> animation;
+  late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    _animation = Tween<double>(begin: 0.0, end: 300.0).animate(_controller)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _controller.reverse();
-        } else {
-          _controller.forward();
-        }
-      });
-    _controller.forward();
+    animation = Tween<double>(
+      begin: 50.0,
+      end: 100.0,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
+
+    controller.repeat(reverse: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Advanced Animation 2')),
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        height: _animation.value,
-        width: _animation.value,
-        child: FlutterLogo(),
+      body: Center(
+        child: AnimatedBuilder(
+          animation: animation,
+          builder: (context, child) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              height: animation.value,
+              width: animation.value,
+              child: FlutterLogo(),
+            );
+          },
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
-    _controller.dispose();
   }
 }
